@@ -27,11 +27,11 @@
 
 @synthesize name;
 
--(id)initWithName:(NSString*)name {
+-(id)initWithName:(NSString*)deviceName {
   self = [super init];
   if(!self) return nil;
   
-  self.name = name;
+  self.name = deviceName;
   self.peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self
                                                                    queue:dispatch_get_main_queue()
                                                                  options:@{}];
@@ -73,7 +73,9 @@
 }
 
 -(void)addService {
-  [self.peripheralManager addService:[self bleatrService]];
+    if(self.peripheralManager.state == CBPeripheralManagerStatePoweredOn) {
+        [self.peripheralManager addService:[self bleatrService]];
+    }
 }
 
 -(void)startAdvertising {
@@ -102,9 +104,14 @@
     bleat = [bleat substringWithRange:NSMakeRange(0, 20)];
   }
   // Drop the bleat!
-  [self.peripheralManager updateValue:[bleat dataUsingEncoding:NSUTF8StringEncoding]
-                    forCharacteristic:_toCentralCharacteristic
-                 onSubscribedCentrals:nil];
+    if (self.peripheralManager.state != CBCentralManagerStatePoweredOn) {
+        NSLog(@"A dead goat is unable to bleat.");
+        return;
+    } else {
+      [self.peripheralManager updateValue:[bleat dataUsingEncoding:NSUTF8StringEncoding]
+                        forCharacteristic:self.toCentralCharacteristic
+                     onSubscribedCentrals:nil];
+    }
   [self addBleat:@"BLEAT!"];
 }
 

@@ -11,7 +11,7 @@
 
 @interface UNSHostedBleatrRoom : UNSBleatrRoom
 
--(id)initWithName:(NSString*)name;
+-(id)initWithName:(NSString*)deviceName;
 
 -(void)startAdvertising;
 -(void)stopAdvertising;

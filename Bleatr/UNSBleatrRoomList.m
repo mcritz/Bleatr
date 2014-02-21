@@ -41,7 +41,6 @@
 
 -(void)startScanning {
   if(!_isScanning) {
-    _isScanning = YES;
     if([self.centralManager state] == CBCentralManagerStatePoweredOn) {
       [self doStartScan];
     }
@@ -50,6 +49,7 @@
 
 -(void)doStartScan {
   [self.centralManager scanForPeripheralsWithServices:@[[UNSBleatrRoom ServiceID]] options:@{}];
+  _isScanning = YES;
 }
 
 -(void)stopScanning {
