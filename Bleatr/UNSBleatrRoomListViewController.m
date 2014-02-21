@@ -34,9 +34,7 @@
   _bleatrRoomList = [[UNSBleatrRoomList alloc] init];
 	// Do any additional setup after loading the view, typically from a nib.
   self.navigationItem.leftBarButtonItem = self.editButtonItem;
-  
-  UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-  self.navigationItem.rightBarButtonItem = addButton;
+
   self.detailViewController = (UNSBleatrRoomDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 }
 
@@ -60,12 +58,6 @@
   // Dispose of any resources that can be recreated.
 }
 
-- (void)insertNewObject:(id)sender
-{
-  
-  NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-  [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-}
 
 #pragma mark - Table View
 
